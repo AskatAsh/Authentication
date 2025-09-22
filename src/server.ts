@@ -19,3 +19,17 @@ const startServer = async () => {
 }
 
 startServer();
+
+// unhandled rejection error
+process.on('unhandledRejection', (error) => {
+    console.log("Unhandled rejection detected! Server shutting down...\n", error);
+
+    if (server) {
+        server.close(() => {
+            process.exit(1);
+        })
+    }
+    process.exit(1);
+})
+
+// Promise.reject("Forgot to catch this promise.");
