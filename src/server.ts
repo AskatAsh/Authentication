@@ -31,5 +31,17 @@ process.on('unhandledRejection', (error) => {
     }
     process.exit(1);
 })
-
 // Promise.reject("Forgot to catch this promise.");
+
+// uncaught exception error
+process.on('uncaughtException', (error) => {
+    console.log("Uncaught exception detected! Server shutting down...\n", error);
+
+    if (server) {
+        server.close(() => {
+            process.exit(1);
+        })
+    }
+    process.exit(1);
+})
+// throw new Error("Forgot to handle local errors.");
