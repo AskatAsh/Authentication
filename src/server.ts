@@ -45,3 +45,27 @@ process.on('uncaughtException', (error) => {
     process.exit(1);
 })
 // throw new Error("Forgot to handle local errors.");
+
+// signal termination error
+process.on('SIGTERM', () => {
+    console.log("SIGTERM Signal detected! Server shutting down...");
+
+    if (server) {
+        server.close(() => {
+            process.exit(1);
+        })
+    }
+    process.exit(1);
+})
+
+// signal interruption error
+process.on('SIGINT', () => {
+    console.log("SIGINT Signal detected! Server shutting down...");
+
+    if (server) {
+        server.close(() => {
+            process.exit(1);
+        })
+    }
+    process.exit(1);
+})
