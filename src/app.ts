@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express, { Request, Response } from "express";
-import { UserRoutes } from "./app/modules/user/user.route";
+import { router } from './app/routes';
 
 // create express app
 const app = express();
@@ -11,8 +11,8 @@ app.use(express.json());
 // middleware for cross origin resource sharing
 app.use(cors());
 
-// middleware for user routes
-app.use('/api/v1/user', UserRoutes);
+// middleware for routes
+app.use('/api/v1/', router);
 
 // root get api
 app.get('/', (req: Request, res: Response) => {
