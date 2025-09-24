@@ -26,6 +26,6 @@ const createUser = (req: Request, res: Response) => {
     }
 }
 
-export const userControllers = {
+export const UserControllers = {
     createUser
 }
