@@ -30,6 +30,7 @@ export interface IUser {
     password?: string;
     profilePhoto?: string;
     address?: string;
+    phone?: string;
 
     status?: Status;
     isVerified?: boolean;

@@ -32,6 +32,12 @@ const userSchema = new Schema<IUser>({
         lowercase: true,
         match: [/^\S+@\S+\.\S+$/, "Invalid email address"]
     },
+    phone: {
+        type: String,
+        trim: true,
+        unique: true,
+        match: [/^(?:\+8801\d{9}|01\d{9})$/, "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX"]
+    },
     password: {
         type: String,
         select: false
