@@ -15,7 +15,14 @@ const getAllUsers = async () => {
 
     const users = await User.find({});
 
-    return users;
+    const totalUsers = await User.countDocuments();
+
+    return {
+        users,
+        meta: {
+            total: totalUsers
+        }
+    };
 }
 
 export const UserServices = {
