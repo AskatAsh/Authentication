@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express, { Request, Response } from "express";
+import { globalErrorHandler } from './app/middlewares/globalErrorHandler';
 import { router } from './app/routes';
 
 // create express app
@@ -20,5 +21,8 @@ app.get('/', (req: Request, res: Response) => {
         message: "Authentication server is running..."
     })
 })
+
+// global error handler
+app.use(globalErrorHandler);
 
 export default app;
