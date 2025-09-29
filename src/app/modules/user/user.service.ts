@@ -1,5 +1,6 @@
 import bcryptjs from "bcryptjs";
 import httpStatus from "http-status-codes";
+import { envVars } from "../../config/env";
 import AppError from "../../errorHelpers/appError";
 import { AuthProvider, IAuthProvider, IUser } from "./user.interface";
 import User from "./user.model";
@@ -14,7 +15,7 @@ const createUser = async (payload: Partial<IUser>) => {
         throw new AppError(httpStatus.BAD_REQUEST, "This user already exists.");
     }
 
-    const salt = await bcryptjs.genSalt(10);
+    const salt = await bcryptjs.genSalt(envVars.BCRYPT_SALT_ROUND);
 
     const hashedPassword = await bcryptjs.hash(password as string, salt);
 
