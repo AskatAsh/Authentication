@@ -1,7 +1,9 @@
-
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status-codes";
+import { JwtPayload } from "jsonwebtoken";
+import { envVars } from "../../config/env";
 import { catchAsync } from "../../utils/catchAsync";
+import { verifyToken } from "../../utils/jwt";
 import { sendResponse } from "../../utils/sendResponse";
 import { UserServices } from "./user.service";
 
@@ -15,6 +17,24 @@ const createUser = catchAsync(async (req: Request, res: Response, next: NextFunc
         statusCode: httpStatus.CREATED,
         message: "User Created Successfully!",
         data: user,
+    })
+})
+
+// controller to update user
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const updateUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.id;
+    const payload = req.body;
+    const token = req.headers.authorization;
+
+    const verifiedToken = verifyToken(token as string, envVars.JWT_ACCESS_SECRET) as JwtPayload;
+    const updatedUser = await UserServices.updateUser(userId, payload, verifiedToken);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "User Updated Successfully!",
+        data: updatedUser,
     })
 })
 
@@ -34,5 +54,6 @@ const getAllUsers = catchAsync(async (req: Request, res: Response, next: NextFun
 
 export const UserControllers = {
     createUser,
+    updateUser,
     getAllUsers
 }
