@@ -8,6 +8,8 @@ interface EnvConfig {
     NODE_ENV: 'development' | 'production',
     JWT_ACCESS_SECRET: string,
     BCRYPT_SALT_ROUND: number,
+    SUPER_ADMIN_EMAIL: string,
+    SUPER_ADMIN_PASS: string
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -25,6 +27,8 @@ const loadEnvVariables = (): EnvConfig => {
         NODE_ENV: process.env.NODE_ENV as 'development' | 'production',
         JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET as string,
         BCRYPT_SALT_ROUND: Number(process.env.SALT) as number,
+        SUPER_ADMIN_EMAIL: process.env.SUPER_ADMIN_EMAIL as string,
+        SUPER_ADMIN_PASS: process.env.SUPER_ADMIN_PASS as string
     }
 }
 

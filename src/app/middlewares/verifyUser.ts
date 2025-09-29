@@ -14,10 +14,7 @@ export const verifyUser = (...userRoles: (keyof typeof Role)[]) => async (req: R
             throw new AppError(403, "Missing Access Token.");
         }
 
-        // const verifiedToken = jwt.verify(accessToken, envVars.JWT_SECRET);
         const verifiedToken = verifyToken(accessToken, envVars.JWT_ACCESS_SECRET) as JwtPayload;
-
-        console.log(verifiedToken);
 
         if (!userRoles.includes(verifiedToken.role)) {
             throw new AppError(403, "You Are Not Permitted To Access This Route.");
@@ -25,7 +22,6 @@ export const verifyUser = (...userRoles: (keyof typeof Role)[]) => async (req: R
 
         next();
     } catch (error) {
-        console.log("jwt error", error);
         next(error);
     }
 }
