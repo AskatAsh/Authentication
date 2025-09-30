@@ -20,6 +20,8 @@ export const verifyUser = (...userRoles: (keyof typeof Role)[]) => async (req: R
             throw new AppError(403, "You Are Not Permitted To Access This Route.");
         }
 
+        req.user = verifiedToken;
+
         next();
     } catch (error) {
         next(error);
