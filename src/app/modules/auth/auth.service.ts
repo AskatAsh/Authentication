@@ -1,8 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import httpStatus from 'http-status-codes';
-import { envVars } from '../../config/env';
 import AppError from "../../errorHelpers/appError";
-import { generateToken } from '../../utils/jwt';
+import { getAuthTokens } from '../../utils/getAuthTokens';
 import { IUser } from "../user/user.interface";
 import User from "../user/user.model";
 
@@ -22,17 +21,15 @@ const credentialsLogin = async (payload: Partial<IUser>) => {
         throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Password.");
     }
 
-    const jwtPayload = {
-        userId: isUserExist._id,
-        email: isUserExist.email,
-        role: isUserExist.role,
-    }
+    const { accessToken, refreshToken } = getAuthTokens(isUserExist);
 
-    const accessToken = generateToken(jwtPayload, envVars.JWT_ACCESS_SECRET, '1d');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: pass, ...rest } = isUserExist.toObject();
 
     return {
-        email: isUserExist.email,
-        accessToken: accessToken
+        accessToken,
+        refreshToken,
+        user: rest
     }
 };
 
