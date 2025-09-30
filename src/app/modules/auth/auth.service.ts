@@ -1,10 +1,11 @@
 import bcryptjs from 'bcryptjs';
 import httpStatus from 'http-status-codes';
 import AppError from "../../errorHelpers/appError";
-import { getAuthTokens } from '../../utils/getAuthTokens';
+import { createNewAccessToken, getAuthTokens } from '../../utils/getAuthTokens';
 import { IUser } from "../user/user.interface";
 import User from "../user/user.model";
 
+// login user using credentials and generate tokens
 const credentialsLogin = async (payload: Partial<IUser>) => {
 
     const { email, password } = payload;
@@ -33,6 +34,16 @@ const credentialsLogin = async (payload: Partial<IUser>) => {
     }
 };
 
+// generate access token with refresh token
+const getNewAccessToken = async (refreshToken: string) => {
+    const accessToken = await createNewAccessToken(refreshToken);
+
+    return {
+        accessToken
+    }
+};
+
 export const AuthServices = {
-    credentialsLogin
+    credentialsLogin,
+    getNewAccessToken
 }

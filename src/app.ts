@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import cors from 'cors';
 import express, { Request, Response } from "express";
 import { globalErrorHandler } from './app/middlewares/globalErrorHandler';
@@ -9,6 +10,9 @@ const app = express();
 
 // middleware to parse request body
 app.use(express.json());
+
+// middleware to parse cookies
+app.use(cookieParser());
 
 // middleware for cross origin resource sharing
 app.use(cors());
