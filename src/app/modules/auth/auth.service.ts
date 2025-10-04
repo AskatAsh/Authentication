@@ -7,7 +7,7 @@ import { createNewAccessToken, getAuthTokens } from '../../utils/getAuthTokens';
 import { IUser } from "../user/user.interface";
 import User from "../user/user.model";
 
-// login user using credentials and generate tokens
+// login user using credentials and generate tokens -> now done by passport
 const credentialsLogin = async (payload: Partial<IUser>) => {
 
     const { email, password } = payload;
