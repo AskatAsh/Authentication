@@ -12,6 +12,11 @@ import { IErrorSources } from "../interfaces/error.types";
 
 // global error handler
 export const globalErrorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
+
+    if (envVars.NODE_ENV === "development") {
+        console.log(error);
+    }
+
     let statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     let message = "Something went wrong!";
 
