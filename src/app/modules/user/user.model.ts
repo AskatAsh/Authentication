@@ -32,6 +32,7 @@ const userSchema = new Schema<IUser>({
         lowercase: true,
         match: [/^\S+@\S+\.\S+$/, "Invalid email address"]
     },
+    age: Number,
     phone: {
         type: String,
         trim: true,
